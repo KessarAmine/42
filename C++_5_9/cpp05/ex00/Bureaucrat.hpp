@@ -6,7 +6,7 @@
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:12:52 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/23 16:40:48 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/25 19:55:57 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class Bureaucrat
 				const char	*what() const throw();
 		};
 	private:
-		std::string	Name const;
+		std::string	Name;
 		int			Grade;
 };
 std::ostream &operator<<(std::ostream &outsteam, Bureaucrat const &obj);
