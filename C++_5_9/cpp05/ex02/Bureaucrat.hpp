@@ -6,7 +6,7 @@
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:12:52 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/25 18:37:23 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:02:00 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 #include <iostream>
 #include <string>
-#include "Forms.hpp"
+#include "Form.hpp"
 
 #define LOWEST 150
 #define HIGHEST 1
+class Form;
 
-class Forms;
 class Bureaucrat
 {
 	public:
@@ -29,10 +29,11 @@ class Bureaucrat
 		~Bureaucrat();
 		std::string	get_name() const;
 		int			get_grade() const;
+		void		set_grade(int grade);
 		void		inc_grade();
 		void		dec_grade();
-		void		sign(Forms &form);
-		void		execute(Forms const &form);
+		void		signForm(Form &form);
+		void		executeForm(Form &form)const;
 		Bureaucrat &operator=(Bureaucrat const &obj);
 		class GradeTooHighException : public std::exception {
 			public:
@@ -43,7 +44,7 @@ class Bureaucrat
 				const char	*what() const throw();
 		};
 	private:
-		std::string	Name;
+		std::string	const Name;
 		int			Grade;
 };
 std::ostream &operator<<(std::ostream &outsteam, Bureaucrat const &obj);

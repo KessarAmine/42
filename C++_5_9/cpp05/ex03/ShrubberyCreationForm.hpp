@@ -6,16 +6,16 @@
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:05:52 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/25 19:46:45 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:11:14 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Forms.hpp"
+#include "Form.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
 
-class ShrubberyCreationForm : public Forms
+class ShrubberyCreationForm : public Form
 {
 	public:
 		ShrubberyCreationForm();
@@ -23,9 +23,10 @@ class ShrubberyCreationForm : public Forms
 		ShrubberyCreationForm(ShrubberyCreationForm const &src);
 		~ShrubberyCreationForm();
 		ShrubberyCreationForm &operator=(ShrubberyCreationForm const &obj);
-		void action() const;
-		Forms *copy(std::string target) const;
+		void execute(Bureaucrat const &executor)const;
 
+		std::string getTarget(void)const;
 	private:
 		std::string target;
 };
+std::ostream	&operator<<(std::ostream &o, ShrubberyCreationForm *a);

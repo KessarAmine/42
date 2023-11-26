@@ -6,15 +6,15 @@
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:05:55 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/24 18:16:49 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:16:41 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Forms.hpp"
+#include "Form.hpp"
 #include <iostream>
 #include <string>
 
-class RobotomyRequestForm : public Forms
+class RobotomyRequestForm : public Form
 {
 	public:
 		RobotomyRequestForm();
@@ -22,8 +22,9 @@ class RobotomyRequestForm : public Forms
 		RobotomyRequestForm(RobotomyRequestForm const &src);
 		~RobotomyRequestForm();
 		RobotomyRequestForm &operator=(RobotomyRequestForm const &obj);
-		void action() const;
-	
+		void execute(Bureaucrat const &executor)const;
+
+		std::string getTarget(void)const;
 	private:
-		std::string target;
+		std::string const target;
 };

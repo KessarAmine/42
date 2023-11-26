@@ -6,46 +6,64 @@
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:13:56 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/25 19:47:04 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:41:41 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "RobotomyRequestForm.hpp"
 
-RobotomyRequestForm::RobotomyRequestForm():Forms("RobotomyRequestForm", 72, 45) 
+RobotomyRequestForm::RobotomyRequestForm():Form("RobotomyRequestForm", 72, 45), target("(Default)")
 {
-	this->target = "none";
+	std::cout << "RobotomyRequestForm Default Constructor called" << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(std::string target):Forms("RobotomyRequestForm", 72, 45) 
+RobotomyRequestForm::RobotomyRequestForm(std::string _target):Form("RobotomyRequestForm", 72, 45), target(_target)
 {
-	this->target = target;
+	std::cout << "RobotomyRequestForm Constructor for target\n";
 }
 
-RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const &src):Forms("RobotomyRequestForm", 72, 45) 
+RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const &src):Form("RobotomyRequestForm", 72, 45), target(src.getTarget())
 {
-	this->target = src.target;
+	std::cout << "RobotomyRequestForm Copy Constructor called to copy \n";
+	*this = src;
 }
 
-RobotomyRequestForm::~RobotomyRequestForm() {}
-
-RobotomyRequestForm & RobotomyRequestForm::operator=(RobotomyRequestForm const &obj) 
+RobotomyRequestForm::~RobotomyRequestForm()
 {
-	this->target = obj.target;
+	std::cout << "RobotomyRequestForm Deconstructor\n";
+}
+
+RobotomyRequestForm & RobotomyRequestForm::operator=(RobotomyRequestForm const &obj)
+{
+	if (this == &obj)
+		return *this;
 	return *this;
 }
 
-void RobotomyRequestForm::action() const 
+void RobotomyRequestForm::execute(Bureaucrat const &executor)const
 {
-	srand((long) this);
-	if (rand() & 1) 
+	if ((int)executor.get_grade() > this->get_toexecute_grade())
+		throw (Bureaucrat::GradeTooLowException());
+	else if (this->get_is_signed() == "False")
+		throw (Form::NotSignedException());
+	if (rand() &1)
 		std::cout << this->target << " has been robotomized successfully." << std::endl;
 	else 
 		std::cout << this->target << " robotomy failed." << std::endl;
 }
 
-Forms *RobotomyRequestForm::copy(std::string target) const
+// ostream Overload
+std::ostream	&operator<<(std::ostream &out, RobotomyRequestForm *obj)
 {
-	return new RobotomyRequestForm(target);
+	out << "\t" << obj->get_name() << " Form:" << std::endl;
+	out << "\t|-Status:" << obj->get_is_signed() << std::endl;
+	out << "\t|-sign_grade :" << obj->get_tosign_grade() << std::endl;
+	out << "\t|-execute_grade :" << obj->get_toexecute_grade() << std::endl;
+	return (out);
+}
+
+std::string	RobotomyRequestForm::getTarget(void)const
+{
+	return (this->target);
 }

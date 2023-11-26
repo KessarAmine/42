@@ -6,7 +6,7 @@
 #    By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/04 14:58:39 by kmohamed          #+#    #+#              #
-#    Updated: 2023/11/25 19:39:34 by kmohamed         ###   ########.fr        #
+#    Updated: 2023/11/26 14:20:21 by kmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME:= run
 FLAGS+= -Wall -Werror -Wextra -std=c++98
 
 SRC:=	Bureaucrat.cpp \
-		Forms.cpp \
+		Form.cpp \
 		PresidentialPardonForm.cpp \
 		RobotomyRequestForm.cpp \
 		ShrubberyCreationForm.cpp \

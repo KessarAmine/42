@@ -6,38 +6,46 @@
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:11:48 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/25 19:15:14 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:36:22 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
 
-ShrubberyCreationForm::ShrubberyCreationForm():Forms("ShrubberyCreationForm", 145, 137) 
+ShrubberyCreationForm::ShrubberyCreationForm():Form("ShrubberyCreationForm", 145, 137), target("(Default)")
 {
-	this->target = "none";
+	std::cout << "ShrubberyCreationForm Default Constructor called" << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string target):Forms("ShrubberyCreationForm", 145, 137) 
+ShrubberyCreationForm::ShrubberyCreationForm(std::string _target):Form("ShrubberyCreationForm", 145, 137), target(_target)
 {
-	this->target = target;
-	this->action();
+	std::cout << "ShrubberyCreationForm Constructor for target " << this->getTarget() << " called" << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &src):Forms("ShrubberyCreationForm", 145, 137) 
+ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &src):Form("ShrubberyCreationForm", 145, 137), target(src.getTarget())
 {
-	this->target = src.target;
+	std::cout << "ShrubberyCreationForm Copy Constructor called to copy " << std::endl;
+	*this = src;
 }
 
-ShrubberyCreationForm::~ShrubberyCreationForm() {}
-
-ShrubberyCreationForm &ShrubberyCreationForm::operator=(ShrubberyCreationForm const &obj) 
+ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-	this->target = obj.target;
-	return *this;
+	std::cout << "ShrubberyCreationForm Deconstructor " << this->get_name() << " called" << std::endl;
 }
 
-void ShrubberyCreationForm::action() const
+ShrubberyCreationForm &ShrubberyCreationForm::operator=(ShrubberyCreationForm const &obj)
 {
+	if (this == &obj)
+		return (*this);
+	return (*this);
+}
+
+void ShrubberyCreationForm::execute(Bureaucrat const &executor)const
+{
+	if ((int)executor.get_grade() > this->get_toexecute_grade())
+		throw (Bureaucrat::GradeTooLowException());
+	else if (this->get_is_signed() == "False")
+		throw (Form::NotSignedException());
 	std::ofstream outFile(this->target + "_shrubbery");
 	if (!outFile) 
 	{
@@ -50,4 +58,20 @@ void ShrubberyCreationForm::action() const
 	outFile << "   /_/ \\_\\ \n";
 	outFile << "     _|_   \n";
 	std::cout << "File created successfully: " << target << "_shrubbery\n";
+}
+
+// Getter
+std::string	ShrubberyCreationForm::getTarget(void)const
+{
+	return (this->target);
+}
+
+// ostream Overload
+std::ostream	&operator<<(std::ostream &out, ShrubberyCreationForm *obj)
+{
+	out << "\t" << obj->get_name() << " Form:" << std::endl;
+	out << "\t|-Status:" << obj->get_is_signed() << std::endl;
+	out << "\t|-sign_grade :" << obj->get_tosign_grade() << std::endl;
+	out << "\t|-execute_grade :" << obj->get_toexecute_grade() << std::endl;
+	return (out);
 }

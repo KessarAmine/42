@@ -1,51 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Forms.hpp                                          :+:      :+:    :+:   */
+/*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:56:11 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/23 22:37:26 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:15:59 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORMS_HPP
-# define FORMS_HPP
+#ifndef FORM_HPP
+# define FORM_HPP
 
 #include <iostream>
 #include <string>
 
 #include "Bureaucrat.hpp"
 
-class Forms
+class Bureaucrat;
+
+class Form
 {
 	public:
-		Forms(std::string name, int grade_tosign, int grade_toexecute);
-		Forms(Forms const &obj);
-		Forms();
-		~Forms();
-		Forms &operator=(Forms const &obj);
+		Form(std::string name, int grade_tosign, int grade_toexecute);
+		Form(Form const &obj);
+		Form();
+		~Form();
+		Form &operator=(Form const &obj);
 		std::string	get_name() const;
 		std::string	get_is_signed() const;
 		int			get_tosign_grade() const;
 		int			get_toexecute_grade() const;
-		void		sign(Bureaucrat const &bCrat);
+		void		beSigned(Bureaucrat const &bCrat);
 
 	private:
-		std::string	name;
-		bool		is_signed;
-		int			grade_sign;
-		int			grade_execute;
+		std::string	const	name;
+		bool				is_signed;
+		int			const	grade_sign;
+		int			const	grade_execute;
 
-	class GradeTooHighException : public std::exception {
-		public:
-			const char	*what() const throw();
-	};
-	class GradeTooLowException : public std::exception {
-		public:
-			const char	*what() const throw();
-	};
+		class GradeTooHighException : public std::exception {
+			public:
+				virtual const char	*what() const throw();
+		};
+		class GradeTooLowException : public std::exception {
+			public:
+				virtual const char	*what() const throw();
+		};
+		class NotSignedException : public std::exception
+		{
+			public:
+				virtual const char *what() const throw();
+		};
 };
-	std::ostream &operator<<(std::ostream &out, Forms const &obj);
+	std::ostream &operator<<(std::ostream &out, Form const &obj);
 #endif

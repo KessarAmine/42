@@ -6,54 +6,52 @@
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:42:47 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/25 19:50:26 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:12:55 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Intern.hpp"
 
-Intern::Intern() 
+Intern::Intern()
 {
-	this->forms[0] = new ShrubberyCreationForm();
-	this->forms[1] = new RobotomyRequestForm();
-	this->forms[2] = new PresidentialPardonForm();
-};
-
-Intern::Intern(Intern const &src) 
-{
-	(void) src;
-
-	this->forms[0] = new ShrubberyCreationForm();
-	this->forms[1] = new RobotomyRequestForm();
-	this->forms[2] = new PresidentialPardonForm();
-};
-
-Intern::~Intern() 
-{
-	// delete forms[0];
-	// delete forms[1];
-	// delete forms[2];
-};
-
-Intern &Intern::operator=(Intern const &obj) 
-{
-	(void) obj;
-	return *this;
+	;
 }
 
-const char * Intern::FormNotFound::what() const throw() 
-{
+Intern::~Intern() {
+	// delete this->Form[0];
+	// delete this->Form[1];
+	// delete this->Form[2];
+	;
+}
+
+// Remove copy constructor and assignment operator if not needed
+
+const char* Intern::FormNotFound::what() const throw() {
 	return "Form Not Found";
 }
 
-Forms *Intern::makeForm(std::string form_name, std::string target) 
+// Remove static keyword from these functions
+Form* makePresident(const std::string target)
+{
+	return new PresidentialPardonForm(target);
+}
+
+Form* makeRobot(const std::string target)
+{
+	return new RobotomyRequestForm(target);
+}
+
+Form* makeShrubbery(const std::string target)
+{
+	return new ShrubberyCreationForm(target);
+}
+
+Form* Intern::makeForm(std::string form_name, std::string target_form)
 {
 	std::string froms[3] = {"ShrubberyCreationForm", "RobotomyRequestForm", "PresidentialPardonForm"};
-	int i = 0;
-	for (; i < 3; i++)
-	{
-		if (form_name == froms[i])
-			return forms[i]->copy(target);
-	}
+	Form* (*all_forms[])(const std::string) = {&makePresident, &makeRobot, &makeShrubbery};
+
+	for (int i = 0; i < 3 && form_name != froms[i]; i++)
+		return all_forms[i](target_form);
 	throw Intern::FormNotFound();
 }
