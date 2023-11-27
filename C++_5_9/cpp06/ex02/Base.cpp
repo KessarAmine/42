@@ -6,7 +6,7 @@
 /*   By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 02:44:02 by kmohamed          #+#    #+#             */
-/*   Updated: 2023/11/27 03:30:52 by kmohamed         ###   ########.fr       */
+/*   Updated: 2023/11/27 04:06:06 by kmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,27 @@ void identify(Base* p)
 		std::cout<< "Derived from BASE" <<std::endl;
 }
 
-void identify(Base& p)
+void identify(Base &p)
 {
-	if (dynamic_cast<A*>(&p) != nullptr)
-		std::cout<< "Type :: A" <<std::endl;
-	else if (dynamic_cast<B*>(&p) != nullptr)
-		std::cout<< "Type :: B" <<std::endl;
-	else if (dynamic_cast<C*>(&p) != nullptr)
-		std::cout<< "Type :: C" <<std::endl;
-	else
-		std::cout<< "Type :: Unknown "<<std::endl;
-
+	try
+	{
+		if (dynamic_cast<A*>(&p) != nullptr)
+			std::cout<< "Type :: A" <<std::endl;
+		else if (dynamic_cast<B*>(&p) != nullptr)
+			std::cout<< "Type :: B" <<std::endl;
+		else if (dynamic_cast<C*>(&p) != nullptr)
+			std::cout<< "Type :: C" <<std::endl;
+		else
+			std::cout << "unknow type" << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+		identify(&p);
+		return;
+	}
 	if (dynamic_cast<Base*>(&p) != nullptr)
 		std::cout<< "Derived from BASE" <<std::endl;
 }
+
 Base::~Base(){}
