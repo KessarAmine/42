@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: kmohamed <kmohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/28 15:42:57 by kmohamed          #+#    #+#              #
-#    Updated: 2023/11/28 15:42:58 by kmohamed         ###   ########.fr        #
+#    Created: 2023/11/28 16:08:20 by kmohamed          #+#    #+#              #
+#    Updated: 2023/11/28 16:08:34 by kmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME:= run
 FLAGS+= -Wall -Werror -Wextra -std=c++98
 
 SRC:=	main.cpp \
-		# Array.cpp
+		Span.cpp \
 
 OBJECTS:=  $(SRC:.cpp=.o)
 
